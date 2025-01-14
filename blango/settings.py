@@ -1,3 +1,4 @@
+
 """
 Django settings for blango project.
 
@@ -156,6 +157,46 @@ class Dev(Configuration):
     # Crispy forms settings 
     CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
     CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+    # Logging
+    LOGGING = {
+        "version":1,
+        "disable_existing_loggers": False,
+        "filters":{
+            "require_debug_false": {
+                "()": "django.utils.log.RequireDebugFalse", # Only let log messages through when debug is false(in production)
+            },
+        },
+        "formatters":{
+            "verbose":{
+                "format":"{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+                "style": "{",
+            },
+        },
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler", 
+                "stream":"ext://sys.stdout",
+                "formatter":"verbose"
+            },
+            "mail_admins": {
+                "level": "ERROR", # Only log ERROR and above(ERROR and CRITICAL) messages when sending to admin
+                "class": "django.utils.log.AdminEmailHandler",
+                "filters": ["require_debug_false"], # Use the option as set in filters
+            },
+        },
+        "loggers": {
+            "django.request": {
+                "handlers": ["mail_admins"],
+                "level": "ERROR", # Only log ERROR and above(ERROR and CRITICAL) messages to console
+                "propagate": True, # this ensures the stack traces are logged to the console during
+            },
+        },
+        "root": {
+            "handlers": ["console"], # Use console option to log to stdout
+            "level":"DEBUG",
+        }
+    }
 
 
 class Prod(Dev):
