@@ -59,6 +59,7 @@ class Dev(Configuration):
 
         # Personal apps
         'blog',
+        'blango_auth',
     ]
 
     MIDDLEWARE = [
@@ -210,6 +211,8 @@ class Dev(Configuration):
     # Internal IP addresses
     INTERNAL_IPS = ["192.168.10.93"]
 
+    # Option for new auth app
+    AUTH_USER_MODEL = "blango_auth.User"
 
 class Prod(Dev):
   DEBUG = False
