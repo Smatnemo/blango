@@ -28,7 +28,7 @@ class BlangoUserManager(UserManager):
     if extra_fields.get("is_superuser") is not True:
       raise ValueError("Superuser must have is_super")
 
-    return self._create_user(email, password, **extra_field)
+    return self._create_user(email, password, **extra_fields)
 
 class User(AbstractUser):
   username = None
