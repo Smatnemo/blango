@@ -31,7 +31,8 @@ urlpatterns = [
     path("accounts/register/",
           RegistrationView.as_view(form_class=BlangoRegistrationForm), 
           name="django_registration_register"),
-    path("accounts/", include("django_registration.backends.activation.urls")),
+    path("accounts/", include("django_registration.backends.activation.urls")), # Must come after accounts/register/
+    path("accounts/", include("allauth.urls")), # Must come after the accounts/, django.contrib.auth.urls
     path("accounts/profile/", blango_auth.views.profile, name="profile"),
     path("ip/", views.get_ip, name='get_ip'),
     path("blog/<slug>", views.post_detail, name="blog-post-detail"),
